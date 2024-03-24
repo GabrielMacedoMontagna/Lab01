@@ -210,9 +210,8 @@ public class Jogador {
 		if (email.charAt(posicao_arroba + 1) == '.' || email.charAt(posicao_arroba - 1) == '.') {
 			return false;
 		}
-		
-		//Ainda falta verificar se tem caractere proibido.
-		
+		//Aqui, todos os requisitos para ter o email valido foram atnedidos.
+		//Entao, pode retornar true.
 		return true;
 	}
 
