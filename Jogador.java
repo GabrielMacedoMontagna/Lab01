@@ -210,7 +210,7 @@ public class Jogador {
 		if (email.charAt(posicao_arroba + 1) == '.' || email.charAt(posicao_arroba - 1) == '.') {
 			return false;
 		}
-		//Aqui, todos os requisitos para ter o email valido foram atnedidos.
+		//Aqui, todos os requisitos para ter o email valido foram atendidos.
 		//Entao, pode retornar true.
 		return true;
 	}
