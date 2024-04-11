@@ -5,7 +5,7 @@ public class CartaSorte {
 	private int efeito; //Aqui, vamos adotar 1 como positivo, 0 como neutro e -1 como negativo.
 	private int tempo;
 	private float valor;
-	private String descricao;
+	private String descricao;//trtrtfg
 	private String acao;
 	private String restricao;
 	
