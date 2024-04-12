@@ -3,8 +3,8 @@ package atributos;
 public class Estacao extends Propriedade {
 	
 	//Construtor.
-	public Estacao(int id, int preco, int aluguel, String nome, String proprietario) {
-		super(id, preco, aluguel, nome, proprietario);
+	public Estacao(int preco, int aluguel, String nome, String proprietario) {
+		super(preco, aluguel, nome, proprietario);
 	}
 
 	@Override

@@ -27,6 +27,10 @@ public class Jogador {
 		return nome;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
 	public String getCpf() {
 		return cpf;
 	}

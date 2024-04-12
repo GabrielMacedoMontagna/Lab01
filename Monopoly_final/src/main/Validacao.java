@@ -1,9 +1,9 @@
 package main;
 
 
-public class Validacao { //Teste
+public class Validacao {
 
-	public static boolean verificaDigitosIguais(String cpf) {
+	private static boolean verificaDigitosIguais(String cpf) {
 		char char_atual;
 		char prox_char;
 		int i = 0;
@@ -25,7 +25,7 @@ public class Validacao { //Teste
 		return true;
 	}
 	
-	public static int calculaPrimeiroVerificador(int cpf_inteiros[]) {
+	private static int calculaPrimeiroVerificador(int cpf_inteiros[]) {
 		int i, j = 10, somatoria = 0, resultado;
 		
 		//Para um cpf qualquer, vamos multiplicar seus digitos pelos numeros de 1 a 10, em ordem decrescente.
@@ -42,7 +42,7 @@ public class Validacao { //Teste
 		return resultado;
 	}
 	
-	public static int calculaSegundoVerificador(int cpf_inteiros[]) {
+	private static int calculaSegundoVerificador(int cpf_inteiros[]) {
 		int i, j = 11, somatoria = 0, resultado;
 		
 		//Para um cpf qualquer, vamos multiplicar seus digitos pelos numeros de 1 a 11,

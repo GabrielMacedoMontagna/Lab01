@@ -6,10 +6,14 @@ public class Propriedade {
 	protected int aluguel;
 	private String nome;
 	private String proprietario;
+	private static int contador_id = 0;
 	
 	//Construtor
-	public Propriedade(int id, int preco, int aluguel, String nome, String proprietario) {
-		this.id = id;
+	public Propriedade(int preco, int aluguel, String nome, String proprietario) {
+		
+		contador_id++;
+		this.id = contador_id;
+		
 		this.preco = preco;
 		this.aluguel = aluguel;
 		this.nome = nome;
@@ -38,10 +42,6 @@ public class Propriedade {
 	}
 	
 	///Setters
-	public void setId(int id) {
-		this.id = id;
-	}
-	
 	public void setPreco(int preco) {
 		this.preco = preco;
 	}
