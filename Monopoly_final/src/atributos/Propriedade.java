@@ -1,11 +1,11 @@
 package atributos;
 //
 public class Propriedade {
-	private int id; //id da propriedade.
-	private int preco;
+	protected int id; //id da propriedade.
+	protected int preco;
 	protected int aluguel;
-	private String nome;
-	private String proprietario;
+	protected String nome;
+	protected String proprietario;
 	private static int contador_id = 0;
 	
 	//Construtor
