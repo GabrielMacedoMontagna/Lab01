@@ -1,32 +1,29 @@
-package main;
+package tipos_cartas;
 
+import main.Jogador;
 
-public class CartaSorte {
-	private int id;
+public class CartaSorte extends Carta {
 	private int movimento;
 	private int efeito; //Aqui, vamos adotar 1 como positivo, 0 como neutro e -1 como negativo.
 	private int tempo;
 	private float valor;
-	private String descricao;
 	private String acao;
 	private String restricao;
 	
 	//Construtor.
-	public CartaSorte(int id, int movimento, int efeito, int tempo, float valor, String descricao, String acao, String restricao) {
-		this.id = id;
+	public CartaSorte(int movimento, int efeito, int tempo, float valor, String descricao, String acao, String restricao, Jogador dono) {
+		
+		super(descricao, dono);
+
 		this.movimento = movimento;
 		this.efeito = efeito;
 		this.tempo = tempo;
 		this.valor = valor;
-		this.descricao = descricao;
 		this.acao = acao;
 		this.restricao = restricao;
 	}
 	
-	//Getters e Setters.
-	public int getId() {
-		return id;
-	}
+	//getters.
 	
 	public int getMovimento() {
 		return movimento;
@@ -44,10 +41,6 @@ public class CartaSorte {
 		return valor;
 	}
 	
-	public String getDescricao() {
-		return descricao;
-	}
-	
 	public String getAcao() {
 		return acao;
 	}
@@ -56,10 +49,7 @@ public class CartaSorte {
 		return restricao;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
+	//setters.
 	public void setMovimento(int movimento) {
 		this.movimento = movimento;
 	}
@@ -76,10 +66,6 @@ public class CartaSorte {
 		this.valor = valor;
 	}
 	
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-	
 	public void setAcao(String acao) {
 		this.acao = acao;
 	}
@@ -88,7 +74,17 @@ public class CartaSorte {
 		this.restricao = restricao;
 	}
 	
+	@Override
 	public String toString() {
-		return "id: " + id + ", movimento: " + movimento + ", efeito: " + efeito + ", tempo: " + tempo + ", valor: " + valor + ", descrição: " + descricao + ", ação: " + acao + ", restrição: " + restricao;
+		
+		String out = " ";
+		
+		out += "id: " + super.getId() + ", dono: \n" + super.getDono();
+		out += ", movimento: " + movimento + ", efeito: " + efeito;
+		out += ", tempo: " + tempo + ", valor: " + valor;
+		out += ", descrição: " + super.getDescricao() + ", ação: " + acao;
+		out += ", restrição: " + restricao;
+		
+		return out;
 	}
 }

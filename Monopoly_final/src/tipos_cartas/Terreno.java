@@ -1,4 +1,6 @@
-package atributos;
+package tipos_cartas;
+
+import main.Jogador;
 
 public class Terreno extends Propriedade {
 	private int numeroCasas;
@@ -7,15 +9,16 @@ public class Terreno extends Propriedade {
 	private boolean hotel;
 	
 	//Construtor
-	public Terreno(int preco, int aluguel, String nome, String proprietario, int numeroCasas, int valorCasa, int valorHotel, boolean hotel) {
-		super(preco, aluguel, nome, proprietario);
+	public Terreno(int preco, int aluguel, String nome, String descricao, Jogador dono, int numeroCasas, int valorCasa, int valorHotel, boolean hotel) {
+		super(preco, aluguel, nome, descricao, dono);
+		
 		this.numeroCasas = numeroCasas;
 		this.valorCasa = valorCasa;
 		this.valorHotel = valorHotel;
 		this.hotel = hotel;
 	}
 	
-	//Getters
+	//getters.
 	public int getNumeroCasas() {
 		return numeroCasas;
 	}
@@ -32,17 +35,9 @@ public class Terreno extends Propriedade {
 		return hotel;
 	}
 	
-	//Setters
+	//setters.
 	public void setNumeroCasas(int numeroCasas) {
 		this.numeroCasas = numeroCasas;
-	}
-	
-	public void setValorCasa(int valorCasa) {
-		this.valorCasa = valorCasa;
-	}
-	
-	public void setValorHotel(int valorHotel) {
-		this.valorHotel = valorHotel;
 	}
 	
 	public void setHotel(boolean hotel) {
@@ -54,7 +49,7 @@ public class Terreno extends Propriedade {
 		
 		//Para calcular o aluguel do terreno, vamos multiplicar o valor base do aluguel pelo numero de casas.
 		//se tiver hotel, o valor final do aluguel dobra.
-		int aluguel_final = aluguel;
+		int aluguel_final = super.getAluguel();
 		
 		if (numeroCasas > 0) {
 			
@@ -71,8 +66,9 @@ public class Terreno extends Propriedade {
 	//comprarCasa vai retornar o dinheiro do jogador apos a compra, se ele conseguir comprar.
 	public int comprarCasa(int dinheiro_jogador) {
 		
-		if (dinheiro_jogador >= valorCasa) {
+		if (dono.getDinheiro() >= valorCasa) {
 			numeroCasas++;
+			
 			dinheiro_jogador -= valorCasa;
 		}
 		

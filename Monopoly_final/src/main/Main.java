@@ -1,10 +1,12 @@
 package main;
 
 import java.util.Scanner;
-import atributos.Propriedade;
-import atributos.Terreno;
-import atributos.Estacao;
-import atributos.ServicoPublico;
+
+import tipos_cartas.CartaSorte;
+import tipos_cartas.Estacao;
+import tipos_cartas.Propriedade;
+import tipos_cartas.ServicoPublico;
+import tipos_cartas.Terreno;
 
 public class Main {
 
@@ -40,16 +42,16 @@ public class Main {
 		Peca P3 = new Peca(0, "Amarelo");
 		
 		//agora, vamos instanciar alguns tipos de cartas.
-		CartaSorte C1 = new CartaSorte(1, 0, -1, 0, 0, "Prisão", "Fique duas rodadas na prisão!", "Não há restrição");
-		CartaSorte C2 = new CartaSorte(2, 0, 0, 0, 0, "Construção", "Construa em sua propriedade.", "A carta deve ser usada imediatamente.");
-		CartaSorte C3 = new CartaSorte(3, 0, 1, 0, 100, "Sorte", "Seu vizinho caloteiro finalmente te pagou! Receba 100 reais do jogador à sua esquerda.", "Não há restrição");
-		CartaSorte C4 = new CartaSorte(4, 0, -1, 0, -200, "Azar", "Você estava acima do limite de velocidade e foi multado! Pague 200 reais ao banco.", "Não há restrição");
-		CartaSorte C5 = new CartaSorte(5, 0, 1, 0, 0, "Liberdade", "Esta carta te liberta da prisão imediatamente!", "Use agora ou guarde-a para depois.");
+		CartaSorte C1 = new CartaSorte(0, -1, 0, 0, "Prisão", "Fique duas rodadas na prisão!", "Não há restrição", J1);
+		CartaSorte C2 = new CartaSorte(0, 0, 0, 0, "Construção", "Construa em sua propriedade.", "A carta deve ser usada imediatamente.", J2);
+		CartaSorte C3 = new CartaSorte(0, 1, 0, 100, "Sorte", "Seu vizinho caloteiro finalmente te pagou! Receba 100 reais do jogador à sua esquerda.", "Não há restrição", J3);
+		CartaSorte C4 = new CartaSorte(0, -1, 0, -200, "Azar", "Você estava acima do limite de velocidade e foi multado! Pague 200 reais ao banco.", "Não há restrição", J4);
+		CartaSorte C5 = new CartaSorte(0, 1, 0, 0, "Liberdade", "Esta carta te liberta da prisão imediatamente!", "Use agora ou guarde-a para depois.", J4);
 		
 		//agora, vamos instanciar algumas propriedades.
-		ServicoPublico SP1 = new ServicoPublico(100, 50, "Tratamento de água", "À venda");
-		Terreno T1 = new Terreno(50, 20, "Moema", "À venda", 0, 40, 80, false);
-		Estacao E1 = new Estacao(70, 30, "Estação de trem", "À venda");
+		ServicoPublico SP1 = new ServicoPublico(100, 50, "Tratamento de água", "À venda", J1);
+		Terreno T1 = new Terreno(50, 20, "Moema", "À venda", J2, 0, 40, 80, false);
+		Estacao E1 = new Estacao(70, 30, "Estação de trem", "À venda", J3);
 		
 	}
 }

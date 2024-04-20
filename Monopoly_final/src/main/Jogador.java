@@ -68,7 +68,7 @@ public class Jogador {
 	}
 	
 	public String toString() {
-		return "Nome: " + nome + ", id: " + id + ", cpf: " + cpf + ", email: " + email + ", foto: " + foto + ", dinheiro: " + dinheiro;
+		return "Nome: " + nome + ", id: " + id + ", cpf: " + cpf + ", email: " + email + ", foto: " + foto + ", dinheiro: " + dinheiro + "\n";
 	}
 
 }
