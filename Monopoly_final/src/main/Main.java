@@ -14,32 +14,32 @@ public class Main {
 		//vamos instanciar o tabuleiro.
 		Tabuleiro tabuleiro = new Tabuleiro();
 		
-		//vamos instanciar os jogadores.
-		//vamos tambem instanciar um scanner para receber as entradas.
-		Scanner leitura = new Scanner(System.in);
-		
-		Jogador J1 = new Jogador(leitura.next(), leitura.next(), leitura.next(), leitura.next());
-		leitura.close();
-		
-		tabuleiro.addJogador(J1.getId());
-		
-		Jogador J2 = new Jogador("Jogador2", "123.456.789-00", "Jogador2@gmail.com", "foto J2");
-		tabuleiro.addJogador(J2.getId());
-		
-		Jogador J3 = new Jogador("Jogador3", "111.222.333-44", "Jogador3@hotmail.com", "foto J3");
-		tabuleiro.addJogador(J2.getId());
-		
-		Jogador J4 = new Jogador("Jogador4", "999.888.777-66", "Jogador4@yahoo.com", "foto J4");
-		tabuleiro.addJogador(J4.getId());
-		
-		System.out.println(J1.toString());
-		System.out.println(Validacao.validarCpf(J2.getCpf()));
-
-		
 		//agora, vamos instanciar as pecas de cada jogador.
 		Peca P1 = new Peca(0, "Azul");
 		Peca P2 = new Peca(0, "Vermelho");
 		Peca P3 = new Peca(0, "Amarelo");
+		Peca P4 = new Peca(0, "Verde");
+		
+		//vamos instanciar os jogadores.
+		//vamos tambem instanciar um scanner para receber as entradas.
+		Scanner leitura = new Scanner(System.in);
+		
+		Jogador J1 = new Jogador(leitura.next(), leitura.next(), leitura.next(), leitura.next(), P1);
+		leitura.close();
+		
+		tabuleiro.addJogador(J1);
+		
+		Jogador J2 = new Jogador("Jogador2", "123.456.789-00", "Jogador2@gmail.com", "foto J2", P2);
+		tabuleiro.addJogador(J2);
+		
+		Jogador J3 = new Jogador("Jogador3", "111.222.333-44", "Jogador3@hotmail.com", "foto J3", P3);
+		tabuleiro.addJogador(J3);
+		
+		Jogador J4 = new Jogador("Jogador4", "999.888.777-66", "Jogador4@yahoo.com", "foto J4", P4);
+		tabuleiro.addJogador(J4);
+		
+		System.out.println(J1.toString());
+		System.out.println(Validacao.validarCpf(J2.getCpf()));
 		
 		//agora, vamos instanciar alguns tipos de cartas.
 		CartaSorte C1 = new CartaSorte(0, -1, 0, 0, "Prisão", "Fique duas rodadas na prisão!", "Não há restrição", J1);
