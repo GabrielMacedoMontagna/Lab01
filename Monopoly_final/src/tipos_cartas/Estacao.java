@@ -4,7 +4,13 @@ import main.Jogador;
 
 public class Estacao extends Propriedade {
 	
-	//construtor.
+	//construtor sem dono.
+	public Estacao(int preco, int aluguel, String nome, String descricao) {
+		
+		super(preco, aluguel, nome, descricao);
+	}
+	
+	//construtor com dono.
 	public Estacao(int preco, int aluguel, String nome, String descricao, Jogador dono) {
 		
 		super(preco, aluguel, nome, descricao, dono);

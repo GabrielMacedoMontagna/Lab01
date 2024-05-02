@@ -6,8 +6,8 @@ public class Peca {
 	private String cor;
 	
 	//Construtor.
-	public Peca(int posicao, String cor) {
-		this.posicao = posicao;
+	public Peca(String cor) {
+		this.posicao = 0;
 		this.cor = cor;
 	}
 	

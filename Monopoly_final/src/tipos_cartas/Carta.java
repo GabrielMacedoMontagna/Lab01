@@ -8,7 +8,14 @@ public class Carta {
 	protected Jogador dono;
 	private static int contadorId = 0;
 	
-	//construtor.
+	//construtor sem dono.
+	public Carta(String descricao) {
+		contadorId++;
+		this.id = contadorId;
+		this.descricao = descricao;
+	}
+	
+	//construtor com dono.
 	public Carta(String descricao, Jogador dono) {
 		
 		contadorId++;

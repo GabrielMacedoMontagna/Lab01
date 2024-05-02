@@ -10,7 +10,20 @@ public class CartaSorte extends Carta {
 	private String acao;
 	private String restricao;
 	
-	//Construtor.
+	//construtor sem dono.
+	public CartaSorte(int movimento, int efeito, int tempo, float valor, String descricao, String acao, String restricao) {
+		
+		super(descricao);
+
+		this.movimento = movimento;
+		this.efeito = efeito;
+		this.tempo = tempo;
+		this.valor = valor;
+		this.acao = acao;
+		this.restricao = restricao;
+	}
+	
+	//construtor com dono.
 	public CartaSorte(int movimento, int efeito, int tempo, float valor, String descricao, String acao, String restricao, Jogador dono) {
 		
 		super(descricao, dono);

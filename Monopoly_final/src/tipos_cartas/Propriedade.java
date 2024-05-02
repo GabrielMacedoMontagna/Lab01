@@ -8,7 +8,18 @@ public class Propriedade extends Carta {
 	private int aluguel;
 	private String nome;
 	
-	//construtor.
+	//construtor sem dono.
+	public Propriedade(int preco, int aluguel, String nome, String descricao) {
+		
+		super(descricao);
+		
+				
+		this.preco = preco;
+		this.aluguel = aluguel;
+		this.nome = nome;
+	}
+	
+	//construtor com dono.
 	public Propriedade(int preco, int aluguel, String nome, String descricao, Jogador dono) {
 				
 		super(descricao, dono);

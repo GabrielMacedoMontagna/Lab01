@@ -8,7 +8,17 @@ public class Terreno extends Propriedade {
 	private int valorHotel;
 	private boolean hotel;
 	
-	//Construtor
+	//construtor sem dono.
+	public Terreno(int preco, int aluguel, String nome, String descricao, int numeroCasas, int valorCasa, int valorHotel, boolean hotel) {
+		super(preco, aluguel, nome, descricao);
+		
+		this.numeroCasas = numeroCasas;
+		this.valorCasa = valorCasa;
+		this.valorHotel = valorHotel;
+		this.hotel = hotel;
+	}
+		
+	//construtor com dono.
 	public Terreno(int preco, int aluguel, String nome, String descricao, Jogador dono, int numeroCasas, int valorCasa, int valorHotel, boolean hotel) {
 		super(preco, aluguel, nome, descricao, dono);
 		

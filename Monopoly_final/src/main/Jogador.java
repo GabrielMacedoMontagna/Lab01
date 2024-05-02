@@ -3,6 +3,7 @@ package main;
 import java.util.ArrayList;
 
 import tipos_cartas.Carta;
+import main.Peca;
 
 public class Jogador {
 	private String nome;
@@ -16,7 +17,8 @@ public class Jogador {
 	private static int contador_id = 0;
 
 	//Construtor.
-	public Jogador(String nome, String cpf, String email, String foto, Peca peca) {
+	public Jogador(String nome, String cpf, String email, String foto, String corPeca) {
+		
 		this.nome = nome;
 		
 		contador_id++;
@@ -25,7 +27,7 @@ public class Jogador {
 		this.cpf = cpf;
 		this.email = email;
 		this.foto = foto;
-		this.peca = peca;
+		this.peca = new Peca(corPeca);
 		dinheiro = 500;
 	}
 	
