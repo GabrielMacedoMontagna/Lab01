@@ -27,10 +27,21 @@ public class Tabuleiro {
 		return jogadores;
 	}
 	
+	public ArrayList<Propriedade> getPropriedades(){
+		return propriedades;
+	}
+	
 	//demais métodos.
+	public void addJogador(Jogador jogadorNovo) {
+		//verifica se o jogador ja esta no array.
+		if (!jogadores.contains(jogadorNovo)) {
+			jogadores.add(jogadorNovo);
+		}
+	}
+	
 	public void addJogador(Scanner leitura) {
 		
-		Jogador jogadorNovo = new Jogador(leitura.next(), leitura.next(), leitura.next(), leitura.next(), leitura.next());
+		Jogador jogadorNovo = new Jogador(leitura.nextLine(), leitura.nextLine(), leitura.nextLine(), leitura.nextLine(), leitura.nextLine());
 		
 		//verifica se o jogador ja esta no array.
 		if (!jogadores.contains(jogadorNovo)) {
@@ -43,6 +54,12 @@ public class Tabuleiro {
 		//verifica se o array nao esta vazio e se o jogador procurado esta no array.
 		if (!jogadores.isEmpty() && jogadores.contains(jogadorRemovido)) {
 			jogadores.remove(jogadorRemovido);
+		}
+	}
+	
+	public void addPropriedade(Propriedade propNova) {
+		if (!propriedades.contains(propNova)) {
+			propriedades.add(propNova);
 		}
 	}
 	
@@ -111,12 +128,13 @@ public class Tabuleiro {
 			}
 			
 			if (!adicionou) {
-				System.out.println(nome + "já faz parte do tabuleiro!");
+				System.out.println(nome + " já faz parte do tabuleiro!");
 			}
 			
 			else {
-				System.out.println(nome + "foi adicionada com sucesso!");
+				System.out.println(nome + " foi adicionada com sucesso!");
 			}	
+			leitura.nextLine();//elimina o \n.
 		}
 	}
 	
@@ -126,6 +144,14 @@ public class Tabuleiro {
 		if (!propriedades.isEmpty() && propriedades.contains(propriedadeRemovida)) {
 			propriedades.remove(propriedadeRemovida);
 		}
+	}
+	
+	public void addCartaSorte(CartaSorte CS) {
+		//verifica se a carta ja esta no tabuleiro.
+		if (!cartas.contains(CS)) {
+			cartas.add(CS);
+		}
+		
 	}
 	
 	public void addCartaSorte(Scanner leitura) {

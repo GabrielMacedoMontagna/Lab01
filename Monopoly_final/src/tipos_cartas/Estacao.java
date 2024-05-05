@@ -20,4 +20,24 @@ public class Estacao extends Propriedade {
 	public int calcularAluguel() {
 		return super.getAluguel();
 	}
+	
+	public String toString() {
+		 String out = "";
+		 
+		 out += "ESTAÇÃO\n";
+		 out += "Nome:" + super.getNome() + "\n";
+		 out += "Descrição: " + super.getDescricao() + "\n";
+		
+		 if (super.getDono() == null){
+			 out += "Dono: não possui dono\n";
+		 }
+		 else {
+			 out += "Dono: " + super.getDono().getNome() + "\n";
+		 }
+		
+		 out += "Preço: " + super.getPreco() + "\n";
+		 out += "Aluguel: " + super.getAluguel() + "\n";
+		 
+		 return out;
+	}
 }

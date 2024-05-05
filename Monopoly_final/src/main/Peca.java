@@ -29,6 +29,12 @@ public class Peca {
 	}
 	
 	public String toString() {
-		return "Posição: " + posicao + ", cor: " + cor;
+		
+		String out = "";
+		
+		out += "Cor: " + cor + "\n";
+		out += "Posição no tabuleiro: " + posicao + "\n";
+		
+		return out;
 	}
 }

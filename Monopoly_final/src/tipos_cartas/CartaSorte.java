@@ -90,13 +90,17 @@ public class CartaSorte extends Carta {
 	@Override
 	public String toString() {
 		
-		String out = " ";
+		String out = "";
 		
-		out += "id: " + super.getId() + ", dono: \n" + super.getDono();
-		out += ", movimento: " + movimento + ", efeito: " + efeito;
-		out += ", tempo: " + tempo + ", valor: " + valor;
-		out += ", descrição: " + super.getDescricao() + ", ação: " + acao;
-		out += ", restrição: " + restricao;
+		out += "CARTA SORTE OU REVÉS\n";
+		out += "Descrição: " + super.getDescricao() + "\n";
+		out += "Ação: " + acao + "\n";
+		out += "Dono: " + super.getDono().getNome() + "\n";
+		out += "Movimento: " + movimento + "\n";
+		out += "Efeito: " + efeito + "\n";
+		out += "Tempo: " + tempo + "\n";
+		out += "Valor: " + valor + "\n";
+		out += "Restrição: " + restricao + "\n";
 		
 		return out;
 	}

@@ -13,6 +13,7 @@ public class Carta {
 		contadorId++;
 		this.id = contadorId;
 		this.descricao = descricao;
+		this.dono = null;
 	}
 	
 	//construtor com dono.
@@ -22,6 +23,7 @@ public class Carta {
 		this.id = contadorId;
 		this.descricao = descricao;
 		this.dono = dono;
+		dono.adicionaCarta(this);
 	}
 	
 	//getters.

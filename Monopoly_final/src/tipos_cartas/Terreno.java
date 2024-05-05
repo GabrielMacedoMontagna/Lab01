@@ -95,5 +95,28 @@ public class Terreno extends Propriedade {
 		return dinheiro_jogador;
 	}
 	
-	
+	public String toString() {
+		String out = "";
+		
+		out += "TERRENO\n";
+		out += "Nome:" + super.getNome() + "\n";
+		out += "Descrição: " + super.getDescricao() + "\n";
+		
+		if (super.getDono() == null) {
+			out += "Dono: não possui dono\n";
+		}
+		else {
+			out += "Dono: " + super.getDono().getNome() + "\n";
+		}
+		
+		out += "Preço: " + super.getPreco() + "\n";
+		out += "Aluguel: " + super.getAluguel() + "\n";
+		out += "Preço da casa: " + valorCasa + "\n";
+		out += "Preço do hotel: " + valorHotel + "\n";
+		out += "Número de casas: " + numeroCasas + "\n";
+		out += "Construiu hotel?: " + hotel + "\n";
+		
+		return out;
+	}
+
 }

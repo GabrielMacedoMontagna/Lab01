@@ -3,7 +3,6 @@ package main;
 import java.util.ArrayList;
 
 import tipos_cartas.Carta;
-import main.Peca;
 
 public class Jogador {
 	private String nome;
@@ -21,13 +20,20 @@ public class Jogador {
 		
 		this.nome = nome;
 		
-		contador_id++;
-		this.id = contador_id;
+		if (nome == null) {
+			this.id = 0;
+		}
+		
+		else {
+			contador_id++;
+			this.id = contador_id;	
+		}
 		
 		this.cpf = cpf;
 		this.email = email;
 		this.foto = foto;
 		this.peca = new Peca(corPeca);
+		this.cartas = new ArrayList<Carta>();
 		dinheiro = 500;
 	}
 	
@@ -92,7 +98,9 @@ public class Jogador {
 	
 	//demais métodos.
 	public void adicionaCarta(Carta cartaNova) {
-		cartas.add(cartaNova);
+		if (!cartas.contains(cartaNova)) {
+			cartas.add(cartaNova);
+		}
 	}
 	
 	public String removeCarta(Carta cartaDescartada) {
@@ -108,7 +116,27 @@ public class Jogador {
 	}
 	
 	public String toString() {
-		return "Nome: " + nome + ", id: " + id + ", cpf: " + cpf + ", email: " + email + ", foto: " + foto + ", dinheiro: " + dinheiro + "\nPeca do " + nome + ": " + peca + "\n";
+		
+		String out = "";
+		
+		out += "JOGADOR\n";
+		out += "Nome: " + nome + "\n";
+		out += "CPF: " + cpf + "\n";
+		out += "E-mail: " + email + "\n";
+		out += "Foto: " + foto + "\n";
+		out += "Dinheiro disponível: " + dinheiro + "\n";
+		out += "\nPeça de " + nome + ":\n" + peca;
+		out += "\nCartas de " + nome + ":\n";
+		
+		if (cartas.size() == 0) {
+			out += "Não possui cartas\n";
+		}
+		else {
+			for (int i = 0; i < cartas.size(); i++) {
+				out += cartas.get(i) + "\n";
+			}
+		}
+		
+		return out;
 	}
-
 }
