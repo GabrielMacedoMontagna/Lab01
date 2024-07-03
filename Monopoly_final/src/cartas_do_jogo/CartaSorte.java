@@ -1,19 +1,19 @@
-package tipos_cartas;
+package cartas_do_jogo;
 
 import main.Jogador;
 
 public class CartaSorte extends Carta {
 	private int movimento;
-	private int efeito; //Aqui, vamos adotar 1 como positivo, 0 como neutro e -1 como negativo.
+	private int efeito; //Aqui, vamos colocar quanto o jogador vai ganhar/perder de dinheiro.
 	private int tempo;
 	private float valor;
 	private String acao;
 	private String restricao;
 	
 	//construtor sem dono.
-	public CartaSorte(int movimento, int efeito, int tempo, float valor, String descricao, String acao, String restricao) {
+	public CartaSorte(int movimento, int efeito, int tempo, float valor, String descricao, String acao, String restricao, TipoCarta tipo) {
 		
-		super(descricao);
+		super(descricao, tipo);
 
 		this.movimento = movimento;
 		this.efeito = efeito;
@@ -24,9 +24,9 @@ public class CartaSorte extends Carta {
 	}
 	
 	//construtor com dono.
-	public CartaSorte(int movimento, int efeito, int tempo, float valor, String descricao, String acao, String restricao, Jogador dono) {
+	public CartaSorte(int movimento, int efeito, int tempo, float valor, String descricao, String acao, String restricao, Jogador dono, TipoCarta tipo) {
 		
-		super(descricao, dono);
+		super(descricao, dono, tipo);
 
 		this.movimento = movimento;
 		this.efeito = efeito;
@@ -92,10 +92,17 @@ public class CartaSorte extends Carta {
 		
 		String out = "";
 		
-		out += "CARTA SORTE OU REVÉS\n";
+		if (super.getTipo().equals(TipoCarta.SORTE)) {
+			out += "SORTE\n";
+		}
+		
+		else if (super.getTipo().equals(TipoCarta.REVES)) {
+			out += "REVÉS\n";
+		}
+		
 		out += "Descrição: " + super.getDescricao() + "\n";
 		out += "Ação: " + acao + "\n";
-		out += "Dono: " + super.getDono().getNome() + "\n";
+		//out += "Dono: " + super.getDono().getNome() + "\n"; nao precisa mais ter dono.
 		out += "Movimento: " + movimento + "\n";
 		out += "Efeito: " + efeito + "\n";
 		out += "Tempo: " + tempo + "\n";

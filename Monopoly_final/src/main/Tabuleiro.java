@@ -3,32 +3,54 @@ package main;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import tipos_cartas.Propriedade;
-import tipos_cartas.Carta;
-import tipos_cartas.CartaSorte;
-import tipos_cartas.Estacao;
-import tipos_cartas.ServicoPublico;
-import tipos_cartas.Terreno;
+//import cartas_do_jogo.Carta;
+import cartas_do_jogo.CartaSorte;
+//import cartas_do_jogo.Estacao;
+import cartas_do_jogo.Propriedade;
+//import cartas_do_jogo.ServicoPublico;
+//import cartas_do_jogo.Terreno;
 
-public class Tabuleiro {
+
+public class Tabuleiro implements Salvavel {
+	private int numJogadores;
+	private int tamTabuleiro = 20;
 	private ArrayList<Jogador> jogadores;
 	private ArrayList<Propriedade> propriedades;
-	private ArrayList<Carta> cartas; //nao estava no UML, mas ajuda muito a lidar com todas as cartas na ordem do id de cada uma. nao fiz metodo pra ela ainda.
+	private ArrayList<CartaSorte> cartas;
+	private Propriedade vetorTabuleiro[];
 	
 	//Construtor.
-	public Tabuleiro() {
+	public Tabuleiro(int numJogadores) {
+		this.numJogadores = numJogadores;
 		jogadores = new ArrayList<Jogador>();
-		propriedades = new ArrayList<Propriedade>();
-		cartas = new ArrayList<Carta>();
+		propriedades = new ArrayList<Propriedade>(); //acho que nao vai precisar disso.
+		cartas = new ArrayList<CartaSorte>();
+		vetorTabuleiro = new Propriedade[20];
 	}
 	
 	//getters.
+	public int getNumJog() {
+		return numJogadores;
+	}
+	
+	public int getTamTabuleiro() {
+		return tamTabuleiro;
+	}
+	
 	public ArrayList<Jogador> getJogadores() {
 		return jogadores;
 	}
 	
 	public ArrayList<Propriedade> getPropriedades(){
 		return propriedades;
+	}
+	
+	public ArrayList<CartaSorte> getCartas(){
+		return cartas;
+	}
+	
+	public Propriedade[] getVetorTabuleiro() {
+		return vetorTabuleiro;
 	}
 	
 	//demais métodos.
@@ -40,8 +62,34 @@ public class Tabuleiro {
 	}
 	
 	public void addJogador(Scanner leitura) {
+		String nome, cpf, email, foto, corPeca;
 		
-		Jogador jogadorNovo = new Jogador(leitura.nextLine(), leitura.nextLine(), leitura.nextLine(), leitura.nextLine(), leitura.nextLine());
+		System.out.println("Digite o nome do participante:");
+		nome = leitura.nextLine();
+		
+		System.out.println("Digite o CPF do participante:");
+		cpf = leitura.nextLine();
+		
+		while (!Validacao.validarCpf(cpf)) {
+			System.out.println("CPF inválido, tente novamente:");
+			cpf = leitura.nextLine();
+		}
+		
+		System.out.println("Digite o e-mail do participante:");
+		email = leitura.nextLine();
+		
+		while (!Validacao.validarEmail(email)) {
+			System.out.println("E-mail inválido, tente novamente:");
+			email = leitura.nextLine();
+		}
+		
+		System.out.println("Insira o link para foto do participante:");
+		foto = leitura.nextLine();
+		
+		System.out.println("Qual a cor da peça do jogador?");
+		corPeca = leitura.nextLine();
+		
+		Jogador jogadorNovo = new Jogador(nome, cpf, email, foto, corPeca);
 		
 		//verifica se o jogador ja esta no array.
 		if (!jogadores.contains(jogadorNovo)) {
@@ -54,16 +102,18 @@ public class Tabuleiro {
 		//verifica se o array nao esta vazio e se o jogador procurado esta no array.
 		if (!jogadores.isEmpty() && jogadores.contains(jogadorRemovido)) {
 			jogadores.remove(jogadorRemovido);
+			numJogadores--;
 		}
 	}
 	
 	public void addPropriedade(Propriedade propNova) {
 		if (!propriedades.contains(propNova)) {
 			propriedades.add(propNova);
+			vetorTabuleiro[propNova.getPosicao()] = propNova;
 		}
 	}
 	
-	public void addPropriedade(Scanner leitura) {
+	/*public void addPropriedade(Scanner leitura) {
 		int preco, aluguel;
 		boolean adicionou = false;
 		String nome, descricao;
@@ -136,7 +186,7 @@ public class Tabuleiro {
 			}	
 			leitura.nextLine();//elimina o \n.
 		}
-	}
+	}*/
 	
 	public void removePropriedade(Propriedade propriedadeRemovida) {
 		
@@ -151,10 +201,9 @@ public class Tabuleiro {
 		if (!cartas.contains(CS)) {
 			cartas.add(CS);
 		}
-		
 	}
 	
-	public void addCartaSorte(Scanner leitura) {
+	/*public void addCartaSorte(Scanner leitura) {
 		int movimento, efeito, tempo;
 		float valor;
 		String acao, restricao, descricao;
@@ -196,5 +245,10 @@ public class Tabuleiro {
 		else {
 			System.out.println("A carta em questão já está no jogo.");
 		}
+	}*/
+	
+	//fazer o salvaLog.
+	public void salvaLog() {
+		
 	}
 }

@@ -1,33 +1,40 @@
-package tipos_cartas;
+package cartas_do_jogo;
 
 import main.Jogador;
 
 
-public class Propriedade extends Carta {
+public abstract class Propriedade extends Carta {
 	private int preco;
 	private int aluguel;
+	private int posicao;
+	protected Jogador dono;
 	private String nome;
 	
 	//construtor sem dono.
-	public Propriedade(int preco, int aluguel, String nome, String descricao) {
+	public Propriedade(int preco, int aluguel, int posicao, String nome, String descricao, TipoCarta tipo) {
 		
-		super(descricao);
+		super(descricao, tipo);
 		
 				
 		this.preco = preco;
 		this.aluguel = aluguel;
+		this.posicao = posicao;
+		this.dono = null;
 		this.nome = nome;
+		this.posicao = posicao;
 	}
 	
 	//construtor com dono.
-	public Propriedade(int preco, int aluguel, String nome, String descricao, Jogador dono) {
+	public Propriedade(int preco, int aluguel, int posicao, String nome, String descricao, TipoCarta tipo, Jogador dono) {
 				
-		super(descricao, dono);
+		super(descricao, dono, tipo);
 		
 				
 		this.preco = preco;
 		this.aluguel = aluguel;
+		this.posicao = posicao;
 		this.nome = nome;
+		this.posicao = 1;
 	}
 	
 	//getters.
@@ -43,6 +50,10 @@ public class Propriedade extends Carta {
 		return nome;
 	}
 	
+	public int getPosicao() {
+		return posicao;
+	}
+	
 	///setters.
 	public void setPreco(int preco) {
 		this.preco = preco;
@@ -52,7 +63,5 @@ public class Propriedade extends Carta {
 		this.aluguel = aluguel;
 	}
 	
-	public int calcularAluguel() {
-		return aluguel;
-	}
+	public abstract int calcularAluguel();
 }

@@ -2,7 +2,7 @@ package main;
 
 import java.util.ArrayList;
 
-import tipos_cartas.Carta;
+import cartas_do_jogo.Carta;
 
 public class Jogador {
 	private String nome;
@@ -11,8 +11,10 @@ public class Jogador {
 	private String email;
 	private String foto;
 	private int dinheiro;
+	private int posicao;
 	private Peca peca;
-	private ArrayList<Carta> cartas;
+	private boolean eliminado;
+	private ArrayList<Carta> cartas; //talvez possa ser só um vetor de Propriedade.
 	private static int contador_id = 0;
 
 	//Construtor.
@@ -34,7 +36,9 @@ public class Jogador {
 		this.foto = foto;
 		this.peca = new Peca(corPeca);
 		this.cartas = new ArrayList<Carta>();
-		dinheiro = 500;
+		this.dinheiro = 500;
+		this.posicao = 1;
+		this.eliminado = false;
 	}
 	
 	//getters.
@@ -64,6 +68,10 @@ public class Jogador {
 	
 	public Peca getPeca() {
 		return peca;
+	}
+	
+	public int getPosicao() {
+		return posicao;
 	}
 	
 	public ArrayList<Carta> getCartas() {
@@ -100,6 +108,7 @@ public class Jogador {
 	public void adicionaCarta(Carta cartaNova) {
 		if (!cartas.contains(cartaNova)) {
 			cartas.add(cartaNova);
+			cartaNova.setDono(this);
 		}
 	}
 	
@@ -113,6 +122,35 @@ public class Jogador {
 	
 	public boolean temCarta(Carta cartaBuscada) {
 		return cartas.contains(cartaBuscada);
+	}
+	
+	public void movimentaConta(int valor) {
+		dinheiro += valor; //valor pode ser positivo ou negativo.
+		if (dinheiro < 0) {
+			dinheiro = 0;
+		}
+	}
+	
+	/*public void perdeDinheiro(int valor) {
+		dinheiro -= valor;
+	}*/
+	
+	public void andar(int dados) {
+		int tamanhoTabuleiro = 20;
+		
+		posicao += dados;
+		
+		if (posicao >= tamanhoTabuleiro) {
+			posicao -= tamanhoTabuleiro;
+		}
+	}
+	
+	public void eliminar() {
+		eliminado = true;
+	}
+	
+	public boolean eliminado() {
+		return eliminado;
 	}
 	
 	public String toString() {

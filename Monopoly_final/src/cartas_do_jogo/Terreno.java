@@ -1,36 +1,42 @@
-package tipos_cartas;
+package cartas_do_jogo;
 
-import main.Jogador;
+//import main.Jogador;
 
 public class Terreno extends Propriedade {
 	private int numeroCasas;
+	private int maxCasas = 4;
 	private int valorCasa;
 	private int valorHotel;
 	private boolean hotel;
 	
 	//construtor sem dono.
-	public Terreno(int preco, int aluguel, String nome, String descricao, int numeroCasas, int valorCasa, int valorHotel, boolean hotel) {
-		super(preco, aluguel, nome, descricao);
+	public Terreno(int preco, int aluguel, int posicao, String nome, String descricao, TipoCarta tipo, int numeroCasas, int valorCasa, int valorHotel, boolean hotel) {
+		super(preco, aluguel, posicao, nome, descricao, tipo);
 		
 		this.numeroCasas = numeroCasas;
+		this.maxCasas = 4;
 		this.valorCasa = valorCasa;
 		this.valorHotel = valorHotel;
 		this.hotel = hotel;
 	}
 		
 	//construtor com dono.
-	public Terreno(int preco, int aluguel, String nome, String descricao, Jogador dono, int numeroCasas, int valorCasa, int valorHotel, boolean hotel) {
-		super(preco, aluguel, nome, descricao, dono);
+	/*public Terreno(int preco, int aluguel, int posicao, String nome, String descricao, TipoCarta tipo, Jogador dono, int numeroCasas, int valorCasa, int valorHotel, boolean hotel) {
+		super(preco, aluguel, posicao, nome, descricao, tipo, dono);
 		
 		this.numeroCasas = numeroCasas;
 		this.valorCasa = valorCasa;
 		this.valorHotel = valorHotel;
 		this.hotel = hotel;
-	}
+	}*/
 	
 	//getters.
 	public int getNumeroCasas() {
 		return numeroCasas;
+	}
+	
+	public int getMaxCasas() {
+		return maxCasas;
 	}
 	
 	public int getValorCasa() {
@@ -74,25 +80,25 @@ public class Terreno extends Propriedade {
 	}
 	
 	//comprarCasa vai retornar o dinheiro do jogador apos a compra, se ele conseguir comprar.
-	public int comprarCasa(int dinheiro_jogador) {
+	public boolean comprarCasa() {
 		
-		if (dono.getDinheiro() >= valorCasa) {
+		if (dono.getDinheiro() > valorCasa) {
 			numeroCasas++;
-			
-			dinheiro_jogador -= valorCasa;
+			dono.movimentaConta(-valorCasa);
+			return true;
 		}
 		
-		return dinheiro_jogador;
+		return false;
 	}
 	//comprarHotel vai retornar o dinheiro do jogador apos a compra, se ele conseguir comprar.
-	public int comprarHotel(int dinheiro_jogador) {
+	public boolean comprarHotel() {
 		
-		if (dinheiro_jogador >= valorHotel) {
+		if (dono.getDinheiro() > valorHotel) {
 			hotel = true;
-			dinheiro_jogador -= valorHotel;
+			dono.movimentaConta(valorHotel);;
 		}
 		
-		return dinheiro_jogador;
+		return hotel;
 	}
 	
 	public String toString() {
@@ -109,12 +115,12 @@ public class Terreno extends Propriedade {
 			out += "Dono: " + super.getDono().getNome() + "\n";
 		}
 		
-		out += "Preço: " + super.getPreco() + "\n";
-		out += "Aluguel: " + super.getAluguel() + "\n";
-		out += "Preço da casa: " + valorCasa + "\n";
-		out += "Preço do hotel: " + valorHotel + "\n";
+		out += "Preço: " + super.getPreco() + " reais.\n";
+		out += "Aluguel: " + super.getAluguel() + " reais.\n";
+		out += "Preço da casa: " + valorCasa + " reais.\n";
+		out += "Preço do hotel: " + valorHotel + " reais.\n";
 		out += "Número de casas: " + numeroCasas + "\n";
-		out += "Construiu hotel?: " + hotel + "\n";
+		out += "Hotel construído?: " + hotel + "\n";
 		
 		return out;
 	}
