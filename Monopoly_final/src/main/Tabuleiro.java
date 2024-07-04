@@ -2,28 +2,28 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
-//import cartas_do_jogo.Carta;
 import cartas_do_jogo.CartaSorte;
-//import cartas_do_jogo.Estacao;
 import cartas_do_jogo.Propriedade;
-//import cartas_do_jogo.ServicoPublico;
-//import cartas_do_jogo.Terreno;
-
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Tabuleiro implements Salvavel {
 	private int numJogadores;
+	private int eliminados;
 	private int tamTabuleiro = 20;
 	private ArrayList<Jogador> jogadores;
-	private ArrayList<Propriedade> propriedades;
 	private ArrayList<CartaSorte> cartas;
 	private Propriedade vetorTabuleiro[];
 	
 	//Construtor.
 	public Tabuleiro(int numJogadores) {
 		this.numJogadores = numJogadores;
+		this.eliminados = 0;
+		
 		jogadores = new ArrayList<Jogador>();
-		propriedades = new ArrayList<Propriedade>(); //acho que nao vai precisar disso.
 		cartas = new ArrayList<CartaSorte>();
 		vetorTabuleiro = new Propriedade[20];
 	}
@@ -33,16 +33,16 @@ public class Tabuleiro implements Salvavel {
 		return numJogadores;
 	}
 	
+	public int getEliminados() {
+		return eliminados;
+	}
+	
 	public int getTamTabuleiro() {
 		return tamTabuleiro;
 	}
 	
 	public ArrayList<Jogador> getJogadores() {
 		return jogadores;
-	}
-	
-	public ArrayList<Propriedade> getPropriedades(){
-		return propriedades;
 	}
 	
 	public ArrayList<CartaSorte> getCartas(){
@@ -106,94 +106,12 @@ public class Tabuleiro implements Salvavel {
 		}
 	}
 	
-	public void addPropriedade(Propriedade propNova) {
-		if (!propriedades.contains(propNova)) {
-			propriedades.add(propNova);
-			vetorTabuleiro[propNova.getPosicao()] = propNova;
-		}
+	public void eliminar() {
+		eliminados++;
 	}
 	
-	/*public void addPropriedade(Scanner leitura) {
-		int preco, aluguel;
-		boolean adicionou = false;
-		String nome, descricao;
-		
-		System.out.println("Defina o tipo da nova propriedade:");
-		System.out.println("- Estação (digite 1).");
-		System.out.println("- Serviço Público (digite 2).");
-		System.out.println("- Terreno (digite 3).");
-		
-		int resposta = leitura.nextInt();
-		leitura.nextLine(); //remove o \n que ficou depois de resposta.
-		
-		
-		if (resposta != 1 && resposta != 2 && resposta != 3) {
-			System.out.println("Comando incorreto, abortando nova propriedade.");
-		}
-		
-		else {
-			System.out.println("Digite o nome da propriedade:");
-			nome = leitura.nextLine();
-			
-			System.out.println("Digite uma descrição breve para " + nome + ":");
-			descricao = leitura.nextLine();
-			
-			System.out.println("Digite o preço de compra de " + nome + ":");
-			preco = leitura.nextInt();
-			
-			System.out.println("Digite o valor do aluguel base de " + nome + ":");
-			aluguel = leitura.nextInt();
-			
-			//terreno.
-			if (resposta == 3) {
-				System.out.println("Indique o valor de compra de uma casa em " + nome + ":");
-				int precoCasa = leitura.nextInt();
-				
-				System.out.println("Indique o valor de compra do hotel em " + nome + ":");
-				int precoHotel = leitura.nextInt();
-				
-				Terreno propNova = new Terreno(preco, aluguel, nome, descricao, 0, precoCasa, precoHotel, false);
-				if (!propriedades.contains(propNova)) {
-					propriedades.add(propNova);
-					adicionou = true;
-				}
-			}
-			
-			//servico publico.
-			else if (resposta == 2){
-				ServicoPublico propNova = new ServicoPublico(preco, aluguel, nome, descricao);
-				if (!propriedades.contains(propNova)) {
-					propriedades.add(propNova);
-					adicionou = true;
-				}
-			}
-			
-			//estacao.
-			else if (resposta == 1){
-				Estacao propNova = new Estacao(preco, aluguel, nome, descricao);
-				if (!propriedades.contains(propNova)) {
-					propriedades.add(propNova);
-					adicionou =  true;
-				}
-			}
-			
-			if (!adicionou) {
-				System.out.println(nome + " já faz parte do tabuleiro!");
-			}
-			
-			else {
-				System.out.println(nome + " foi adicionada com sucesso!");
-			}	
-			leitura.nextLine();//elimina o \n.
-		}
-	}*/
-	
-	public void removePropriedade(Propriedade propriedadeRemovida) {
-		
-		//verifica se o array nao esta vazio e se a propriedade procurada esta no array.
-		if (!propriedades.isEmpty() && propriedades.contains(propriedadeRemovida)) {
-			propriedades.remove(propriedadeRemovida);
-		}
+	public void addPropriedade(Propriedade propNova) {
+		vetorTabuleiro[propNova.getPosicao()] = propNova;
 	}
 	
 	public void addCartaSorte(CartaSorte CS) {
@@ -203,52 +121,44 @@ public class Tabuleiro implements Salvavel {
 		}
 	}
 	
-	/*public void addCartaSorte(Scanner leitura) {
-		int movimento, efeito, tempo;
-		float valor;
-		String acao, restricao, descricao;
-		CartaSorte CS;
+	//salvaLog.
+	public void salvaLog(String acao) {
+		String caminhoArquivo = "Log.txt";
 		
-		System.out.println("Descreva brevemente a função da carta no jogo/jogador:");
-		
-		descricao = leitura.nextLine();
-		
-		System.out.println("Digite qual o movimento da carta (se a peça vai pra frente ou pra trás no tabuleiro).");
-		System.out.println("Se o movimento da carta for para trás, digite o valor negativo das casas.");
-		System.out.println("Se não houver movimento, digite 0.");
-		movimento = leitura.nextInt();
-		
-		System.out.println("Indique o efeito da carta. Se for positivo, digite 1; se for negativo, -1; se for neutro, 0.");
-		efeito = leitura.nextInt();
-		
-		System.out.println("Indique o tempo de ação ou de duração da carta. Se a carta não tiver essa propriedade, digite 0.");
-		tempo = leitura.nextInt();
-		
-		System.out.println("Se essa carta envolver pagamento ou recebimento de dinheiro, indique a quantia. Caso contrário, digite 0.");
-		valor = leitura.nextFloat();
-		leitura.nextLine(); //remove o \n que ficou depois de valor.
-
-		System.out.println("Se essa carta gera alguma ação no jogo, descreva-a brevemente.");
-		acao = leitura.nextLine();
-		
-		System.out.println("Se essa carta gera alguma restrição no jogo/jogador, descreva-a brevemente. Caso contrário, dê enter.");
-		restricao = leitura.nextLine();
-		
-		CS = new CartaSorte(movimento, efeito, tempo, valor, descricao, acao, restricao);
-		
-		//verifica se a carta ja esta no tabuleiro.
-		if (!cartas.contains(CS)) {
-			cartas.add(CS);
-			System.out.println("Carta adicionada com sucesso!");
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoArquivo, true))){
+			
+			bw.write(acao);
+			bw.newLine();
+			
+			System.out.println(acao);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
-		else {
-			System.out.println("A carta em questão já está no jogo.");
-		}
-	}*/
+	}
 	
-	//fazer o salvaLog.
-	public void salvaLog() {
+	public void lerLog() {
 		
+		String caminhoArquivo = "Log.txt";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                System.out.println(linha);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	public void limpaLog() {
+		String caminhoArquivo = "Log.txt";
+		
+		try (FileWriter fw = new FileWriter(caminhoArquivo)) {
+			//esse bloco vazio limpa o Log das ações.
+		} catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 }

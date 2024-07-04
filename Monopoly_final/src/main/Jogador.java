@@ -36,7 +36,7 @@ public class Jogador {
 		this.foto = foto;
 		this.peca = new Peca(corPeca);
 		this.cartas = new ArrayList<Carta>();
-		this.dinheiro = 500;
+		this.dinheiro = 60;
 		this.posicao = 1;
 		this.eliminado = false;
 	}
@@ -130,10 +130,6 @@ public class Jogador {
 			dinheiro = 0;
 		}
 	}
-	
-	/*public void perdeDinheiro(int valor) {
-		dinheiro -= valor;
-	}*/
 	
 	public void andar(int dados) {
 		int tamanhoTabuleiro = 20;

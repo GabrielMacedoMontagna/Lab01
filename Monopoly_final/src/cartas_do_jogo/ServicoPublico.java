@@ -1,19 +1,12 @@
 package cartas_do_jogo;
 
-import main.Jogador;
-
 public class ServicoPublico extends Propriedade {
 	private int multiplicador;
 
-	//construtor sem dono.
+	//construtor.
 	public ServicoPublico(int preco, int aluguel, int posicao, String nome, String descricao, TipoCarta tipo, int multiplicador) {
 		super(preco, aluguel, posicao, nome, descricao, tipo);
 		this.multiplicador = multiplicador;
-	}	
-	
-	//construtor com dono.
-	public ServicoPublico(int preco, int aluguel, int posicao, String nome, String descricao, TipoCarta tipo, Jogador dono) {
-		super(preco, aluguel, posicao, nome, descricao, tipo, dono);
 	}
 	
 	@Override

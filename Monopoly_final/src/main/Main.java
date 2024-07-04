@@ -47,7 +47,7 @@ public class Main {
 		//cartas de sorte ou reves.
 		CartaSorte CS1 = new CartaSorte(0, -100, 0, 0, "Crime", "Você foi pego roubando! Pague 100 reais ao banco.", "A carta deve ser usada imediatamente.", TipoCarta.REVES);
 		tabuleiro.addCartaSorte(CS1);
-		CartaSorte CS2 = new CartaSorte(0, -50, 0, 0, "Obras", "Sua casa está em obra! Pague 50 reais ao banco.", "A carta deve ser usada imediatamente.", TipoCarta.SORTE);
+		CartaSorte CS2 = new CartaSorte(0, -50, 0, 0, "Obras", "Sua casa está em obra! Pague 50 reais ao banco.", "A carta deve ser usada imediatamente.", TipoCarta.REVES);
 		tabuleiro.addCartaSorte(CS2);
 		CartaSorte CS3 = new CartaSorte(0, 100, 0, 0, "Sorte", "Seu vizinho caloteiro finalmente te pagou! Receba 100 reais do banco.", "A carta deve ser usada imediatamente.", TipoCarta.SORTE);
 		tabuleiro.addCartaSorte(CS3);
@@ -60,10 +60,11 @@ public class Main {
 		return tabuleiro;
 	}
 	
-	public static Jogador verificaSaldo(Jogador jogadorAtual) {
+	public static Jogador verificaSaldo(Tabuleiro tabuleiro, Jogador jogadorAtual) {
 		if (jogadorAtual.getDinheiro() == 0) {
 			System.out.println(jogadorAtual.getNome() + " ficou sem dinheiro e está fora do jogo! =(");
 			jogadorAtual.eliminar();
+			tabuleiro.eliminar();
 		}
 		return jogadorAtual;
 	}
@@ -87,7 +88,7 @@ public class Main {
 		}
 		
 		else {
-			System.out.println("Não foi possível comprar" + propAtual.getNome() + "pois o dinheiro na sua conta não é suficiente!");
+			System.out.println("Não foi possível comprar a propriedade " + propAtual.getNome() + ", pois o dinheiro na sua conta não é suficiente!");
 		}
 		return jogadorAtual;
 	}
@@ -166,7 +167,7 @@ public class Main {
 		System.out.println("O novo saldo de " + propAtual.getDono().getNome() + " é: " + propAtual.getDono().getDinheiro() + " reais.");
 		
 		//verifica se ele ficou com a conta zerada.
-		jogadorAtual = verificaSaldo(jogadorAtual);
+		jogadorAtual = verificaSaldo(tabuleiro, jogadorAtual);
 		
 		return jogadorAtual;
 	}
@@ -191,12 +192,12 @@ public class Main {
 			
 			
 			
-			System.out.println("Vez de " + nomeJogAtual);
-			System.out.println(jogadorAtual);
-			System.out.println("\n");
+			tabuleiro.salvaLog("Vez de " + nomeJogAtual);
+			tabuleiro.salvaLog(jogadorAtual.toString());
+			tabuleiro.salvaLog("\n");
 			System.out.println("Pressione enter para jogar os dados! =)");
 			leitura.nextLine();
-			System.out.println("Jogando os dados...");
+			tabuleiro.salvaLog("Jogando os dados...");
 			
 			try {
 				//pausa a execucao por 3 segundos.
@@ -208,7 +209,7 @@ public class Main {
 			
 			
 			dado = random.nextInt(min, max);
-			System.out.println("Número tirado no dado: " + dado);
+			tabuleiro.salvaLog("Número tirado no dado: " + dado);
 			
 			//salva a posicao antiga para verificar se chegou no fim do tabuleiro.
 			posAntiga = jogadorAtual.getPosicao();
@@ -217,23 +218,23 @@ public class Main {
 			jogadorAtual.andar(dado);
 			posNova = jogadorAtual.getPosicao();
 			
-			System.out.println("Jogador parou na casa " + posNova);
+			tabuleiro.salvaLog("Jogador parou na casa " + posNova);
 			
 			//verifica se passou pelo comeco.
 			if ((posAntiga + dado) >= tabuleiro.getTamTabuleiro()) {
-				System.out.println("Passou pela casa de início. Receba 200 reais!");
+				tabuleiro.salvaLog("Passou pela casa de início. Receba 200 reais!");
 				jogadorAtual.movimentaConta(200);
 			}
 			
-			System.out.println("Informações da nova posição de " + nomeJogAtual + ":");
+			tabuleiro.salvaLog("Informações da nova posição de " + nomeJogAtual + ":");
 			
 			Propriedade propAtual = tabuleiro.getVetorTabuleiro()[posNova];
 			
 			//se for casa de sorte/reves.
 			if (propAtual == null) {
-				System.out.println("Casa de sorte ou revés! Pressione enter para pegar uma carta!");
+				tabuleiro.salvaLog("Casa de sorte ou revés! Pressione enter para pegar uma carta!");
 				leitura.nextLine();
-				System.out.println("Pegando uma carta...");
+				tabuleiro.salvaLog("Pegando uma carta...");
 				try {
 					//pausa a execucao por 3 segundos.
 					Thread.sleep(3000);
@@ -250,19 +251,19 @@ public class Main {
 					CartaSorte cartaNova = tabuleiro.getCartas().get(indiceCarta);
 					tabuleiro.getCartas().remove(indiceCarta);
 					
-					System.out.println("A carta tirada foi:");
-					System.out.println(cartaNova);
+					tabuleiro.salvaLog("A carta tirada foi:");
+					tabuleiro.salvaLog(cartaNova.toString());
 					efeitoCarta = cartaNova.getEfeito();
 					
 					//movimenta a conta do jogador com base no efeito da carta.
 					jogadorAtual.movimentaConta(efeitoCarta);
-					System.out.println("Novo saldo de " + nomeJogAtual + ": " + jogadorAtual.getDinheiro());
+					tabuleiro.salvaLog("Novo saldo de " + nomeJogAtual + ": " + jogadorAtual.getDinheiro());
 					
 					//verifica se ele ficou com a conta zerada.
-					jogadorAtual = verificaSaldo(jogadorAtual);
+					jogadorAtual = verificaSaldo(tabuleiro, jogadorAtual);
 					
 				} catch (IllegalArgumentException e) {
-					System.out.println("As cartas de sorte/revés acabaram! Vamos pular a vez de " + nomeJogAtual + " =(");
+					tabuleiro.salvaLog("As cartas de sorte/revés acabaram! Vamos pular a vez de " + nomeJogAtual + " =(");
 				}
 			}
 			
@@ -272,14 +273,15 @@ public class Main {
 				
 				//se for terreno sem dono.
 				if (terrenoAtual.getDono() == null) {
-					System.out.println(nomeJogAtual + " parou em um terreno sem dono!");
-					System.out.println("Informações do terreno:");
-					System.out.println(terrenoAtual);
-					System.out.println();
-					System.out.println("Deseja comprar o terreno?");
-					System.out.println("Seu saldo é: " + jogadorAtual.getDinheiro() + " reais.");
-					System.out.println("Sim (digite 1)");
-					System.out.println("Não (digite 2)");
+					tabuleiro.salvaLog(nomeJogAtual + " parou em um terreno sem dono!");
+					tabuleiro.salvaLog("Informações do terreno:");
+					tabuleiro.salvaLog("");
+					tabuleiro.salvaLog(terrenoAtual.toString());
+					tabuleiro.salvaLog("");
+					tabuleiro.salvaLog("Deseja comprar o terreno?");
+					tabuleiro.salvaLog("Seu saldo é: " + jogadorAtual.getDinheiro() + " reais.");
+					tabuleiro.salvaLog("Sim (digite 1)");
+					tabuleiro.salvaLog("Não (digite 2)");
 					resposta = leitura.nextInt();
 					leitura.nextLine();
 					
@@ -290,23 +292,23 @@ public class Main {
 					
 					//se nao for comprar o terreno.
 					else if (resposta == 2) {
-						System.out.println(nomeJogAtual + " não quis comprar o terreno.");
+						tabuleiro.salvaLog(nomeJogAtual + " não quis comprar o terreno.");
 					}
 				}
 					
 				//se o terreno for do jogador.
 				else if (terrenoAtual.getDono().getNome().equals(nomeJogAtual)) { 
-					System.out.println(nomeJogAtual + " parou em " + terrenoAtual.getNome() + ", um terreno que já é seu! Veja as informações:");
-					System.out.println(terrenoAtual);
+					tabuleiro.salvaLog(nomeJogAtual + " parou em " + terrenoAtual.getNome() + ", um terreno que já é seu! Veja as informações:");
+					tabuleiro.salvaLog(terrenoAtual.toString());
 					
 					//verifica se tem hotel. Se tiver, a propriedade ja esta no nivel maximo.
 					if (!terrenoAtual.getHotel()) {
-						System.out.println("Deseja fazer algo com o terreno?");
+						tabuleiro.salvaLog("Deseja fazer algo com o terreno?");
 						
 						//se ainda nao completou o numero de casas.
 						if (terrenoAtual.getNumeroCasas() < terrenoAtual.getMaxCasas()) {
-							System.out.println("- Adicionar casa (digite 1)");
-							System.out.println("- Não (digite 2)");
+							tabuleiro.salvaLog("- Adicionar casa (digite 1)");
+							tabuleiro.salvaLog("- Não (digite 2)");
 							
 							resposta = leitura.nextInt();
 							leitura.nextLine();
@@ -319,8 +321,8 @@ public class Main {
 						
 						//aqui, ja completou o numero de casas, mas nao tem hotel.
 						else {
-							System.out.println("- Adicionar hotel (digite 1)");
-							System.out.println("- Não (digite 2)");
+							tabuleiro.salvaLog("- Adicionar hotel (digite 1)");
+							tabuleiro.salvaLog("- Não (digite 2)");
 							
 							resposta = leitura.nextInt();
 							leitura.nextLine();
@@ -333,7 +335,7 @@ public class Main {
 					}
 					//terreno no nivel maximo.
 					else {
-						System.out.println("Como o terreno já está no nível máximo, não há o que aprimorar.");
+						tabuleiro.salvaLog("Como o terreno já está no nível máximo, não há o que aprimorar.");
 					}
 				}
 				
@@ -349,13 +351,15 @@ public class Main {
 				
 				//servico publico sem dono.
 				if (SPAtual.getDono() == null) {
-					System.out.println(nomeJogAtual + " parou em um serviço público sem dono!");
-					System.out.println("Informações do serviço público:");
-					System.out.println(SPAtual);
-					System.out.println("Deseja comprar " + SPAtual.getNome() + "?");
-					System.out.println("Seu saldo é: " + jogadorAtual.getDinheiro() + " reais.");
-					System.out.println("Sim (digite 1)");
-					System.out.println("Não (digite 2)");
+					tabuleiro.salvaLog(nomeJogAtual + " parou em um serviço público sem dono!");
+					tabuleiro.salvaLog("Informações do serviço público:");
+					tabuleiro.salvaLog("");
+					tabuleiro.salvaLog(SPAtual.toString());
+					tabuleiro.salvaLog("");
+					tabuleiro.salvaLog("Deseja comprar " + SPAtual.getNome() + "?");
+					tabuleiro.salvaLog("Seu saldo é: " + jogadorAtual.getDinheiro() + " reais.");
+					tabuleiro.salvaLog("Sim (digite 1)");
+					tabuleiro.salvaLog("Não (digite 2)");
 					resposta = leitura.nextInt();
 					leitura.nextLine();
 					
@@ -365,15 +369,15 @@ public class Main {
 					}
 					
 					else if (resposta == 2) {
-						System.out.println(nomeJogAtual + " não quis comprar " + SPAtual.getNome());
+						tabuleiro.salvaLog(nomeJogAtual + " não quis comprar " + SPAtual.getNome());
 					}
 				}
 				
 				//servico publico eh do jogador atual.
 				else if(SPAtual.getDono().getNome().equals(nomeJogAtual)) {
-					System.out.println(nomeJogAtual + " parou em " + SPAtual.getNome() + ", um serviço público que já é seu! Veja as informações:");
-					System.out.println(SPAtual);
-					System.out.println("Como a propriedade já é de " + nomeJogAtual + ", não há o que comprar ou aprimorar.");
+					tabuleiro.salvaLog(nomeJogAtual + " parou em " + SPAtual.getNome() + ", um serviço público que já é seu! Veja as informações:");
+					tabuleiro.salvaLog(SPAtual.toString());
+					tabuleiro.salvaLog("Como a propriedade já é de " + nomeJogAtual + ", não há o que comprar ou aprimorar.");
 				}
 				
 				//servico publico eh de outro jogador.
@@ -388,13 +392,15 @@ public class Main {
 				
 				//se a estacao nao tiver dono.
 				if (estacaoAtual.getDono() == null) {
-					System.out.println(nomeJogAtual + " parou em uma estação sem dono!");
-					System.out.println("Informações da estação:");
-					System.out.println(estacaoAtual);
-					System.out.println("Deseja comprar " + estacaoAtual.getNome() + "?");
-					System.out.println("Seu saldo é: " + jogadorAtual.getDinheiro() + " reais.");
-					System.out.println("Sim (digite 1)");
-					System.out.println("Não (digite 2)");
+					tabuleiro.salvaLog(nomeJogAtual + " parou em uma estação sem dono!");
+					tabuleiro.salvaLog("Informações da estação:");
+					tabuleiro.salvaLog("");
+					tabuleiro.salvaLog(estacaoAtual.toString());
+					tabuleiro.salvaLog("");
+					tabuleiro.salvaLog("Deseja comprar " + estacaoAtual.getNome() + "?");
+					tabuleiro.salvaLog("Seu saldo é: " + jogadorAtual.getDinheiro() + " reais.");
+					tabuleiro.salvaLog("Sim (digite 1)");
+					tabuleiro.salvaLog("Não (digite 2)");
 					resposta = leitura.nextInt();
 					leitura.nextLine();
 					
@@ -404,15 +410,15 @@ public class Main {
 					}
 					
 					else if (resposta == 2) {
-						System.out.println(nomeJogAtual + " não quis comprar " + estacaoAtual.getNome());
+						tabuleiro.salvaLog(nomeJogAtual + " não quis comprar " + estacaoAtual.getNome());
 					}
 				}
 				
 				//se a estacao for do jogador atual.
 				else if (estacaoAtual.getDono().getNome().equals(nomeJogAtual)) {
-					System.out.println(nomeJogAtual + " parou em " + estacaoAtual.getNome() + ", uma estação que já é sua! Veja as informações:");
-					System.out.println(estacaoAtual);
-					System.out.println("Como a propriedade já é de " + nomeJogAtual + ", não há o que comprar ou aprimorar.");
+					tabuleiro.salvaLog(nomeJogAtual + " parou em " + estacaoAtual.getNome() + ", uma estação que já é sua! Veja as informações:");
+					tabuleiro.salvaLog(estacaoAtual.toString());
+					tabuleiro.salvaLog("Como a propriedade já é de " + nomeJogAtual + ", não há o que comprar ou aprimorar.");
 				}
 				
 				//se a estacao for de outro jogador.
@@ -422,15 +428,22 @@ public class Main {
 			}
 			
 			//caso tenha restado somente um jogador, ele eh o campeao.
-			if (tabuleiro.getNumJog() == 1) {
-				System.out.println("Temos um vencedor! " + tabuleiro.getJogadores().get(0).getNome() + "é o grande campeão!");
+			if (tabuleiro.getEliminados() == (tabuleiro.getNumJog() - 1)) {
+				tabuleiro.salvaLog("Temos um vencedor!");
+				
+				for (int i = 0; i < tabuleiro.getNumJog(); i++) {
+					if (!tabuleiro.getJogadores().get(i).eliminado()) {
+						tabuleiro.salvaLog("O jogador " + tabuleiro.getJogadores().get(i).getNome() + " é o grande campeão! =)");
+					}
+				}
+				
 				jogando = false;
 			}
 			
 			else {
-				System.out.println("Pressione enter para passar a vez ao próximo jogador!");
+				tabuleiro.salvaLog("Pressione enter para passar a vez ao próximo jogador!");
 				leitura.nextLine();
-				System.out.println("**************************************************************************************************");
+				tabuleiro.salvaLog("**************************************************************************************************");
 				
 				indiceJog++;
 				if (indiceJog == tabuleiro.getNumJog()) {
@@ -456,7 +469,7 @@ public class Main {
 		int numJogadores;
 		
 		//inicio do menu.
-		/*System.out.println("Olá, bem-vindo ao Menu de Monopoly, o jogo dos negócios!");
+		System.out.println("Olá, bem-vindo ao Menu de Monopoly, o jogo dos negócios!");
 		System.out.println("Digite o número de jogadores:");
 		
 		numJogadores = leitura.nextInt();
@@ -465,23 +478,13 @@ public class Main {
 		//vamos instanciar o tabuleiro.
 		Tabuleiro tabuleiro = new Tabuleiro(numJogadores);
 		
+		//vamos limpar os registros antigos.
+		tabuleiro.limpaLog();
+		
 		for (int i = 1; i <= numJogadores; i++) {
 			System.out.println("Participante " + i + ":");
 			tabuleiro.addJogador(leitura);
-		}*/
-		
-		numJogadores = 3;
-		//vamos instanciar o tabuleiro.
-		Tabuleiro tabuleiro = new Tabuleiro(numJogadores);
-		
-		Jogador J1 = new Jogador("Gabriel", "123.456.789-00", "gabriel@email.com", "fotoGabriel", "verde");
-		tabuleiro.addJogador(J1);
-		
-		Jogador J2 = new Jogador("Maria Chata", "123.456.789-00", "esther@email.com", "fotoEsther", "vinho");
-		tabuleiro.addJogador(J2);
-		
-		Jogador J3 = new Jogador("Mamãe", "123.456.789-00", "fulano@email.com", "fotoFulano", "rosa");
-		tabuleiro.addJogador(J3);
+		}
 		
 		System.out.println("Vamos começar o jogo!");
 		
@@ -489,105 +492,10 @@ public class Main {
 		
 		jogo(tabuleiro, leitura);
 		
+		System.out.println("PRESSIONE ENTER PARA VER O REGISTRO DA AÇÕES NO JOGO:");
+		leitura.nextLine();
 		
-		
-		
-		
-		
-		
-		
-		
-		/*while (!input.equals("1") && !input.equals("2")) {
-			System.out.println("Comando incorreto, tente novamente.");
-			input = leitura.nextLine();
-		}*/
-		
-		//vai personalizar.
-		/*if (input.equals("1")) {
-
-			boolean personalizando = true;
-			while (personalizando) {
-				System.out.println("###########################################################################");
-				System.out.println("Escolha uma das opções abaixo para personalizar o seu tabuleiro:");
-				System.out.println("- Adicionar jogador (digite 1)");
-				System.out.println("- Adicionar uma carta de sorte ou revés (digite 2)");
-				System.out.println("- Adicionar uma propriedade (digite 3)");
-				System.out.println("- Encerrar personalização (digite 'fim')");
-				
-				input = leitura.nextLine();
-							
-				if (input.equals("fim")) {
-					personalizando = false;
-				}
-				
-				else if (input.equals("1")) {
-					System.out.println("Digite Nome, CPF, e-mail, descrição de foto e cor da peça do jogador.");
-					System.out.println("Deixe tudo separado por linha:");
-					
-					tabuleiro.addJogador(leitura);
-					System.out.println("Jogador adicionado com sucesso!");
-				}
-				
-				else if (input.equals("2")) {
-					tabuleiro.addCartaSorte(leitura);
-				}
-				
-				else if (input.equals("3")) {
-					tabuleiro.addPropriedade(leitura);
-				}
-			
-			}
-		}*/
-		
-		/*if (input.equals("2")) {
-			
-			//jogadores.
-			Jogador J1 = new Jogador("Gabriel", "123.456.789-00", "gabriel@email.com", "fotoGabriel", "azul");
-			tabuleiro.addJogador(J1);
-			
-			Jogador J2 = new Jogador("Esther", "123.456.789-00", "esther@email.com", "fotoEsther", "verde");
-			tabuleiro.addJogador(J2);
-			
-			Jogador J3 = new Jogador("Fulano", "123.456.789-00", "fulano@email.com", "fotoFulano", "vermelho");
-			tabuleiro.addJogador(J3);
-						
-		}
-		
-		System.out.println("Muito bem, seu tabuleiro está pronto para o jogo!");
-		boolean executando = true;
-		
-		while (executando) {
-			System.out.println("###########################################################################");
-			System.out.println("Escolha o que deseja fazer:");
-			System.out.println("- Visualizar perfil geral do jogador (digite 1)");
-			System.out.println("- Visualizar as propriedades do tabuleiro (digite 2)");
-			System.out.println("- Finalizar programa (digite 3)");
-			
-			input = leitura.nextLine();
-			
-			if (input.equals("1")) {
-				System.out.println("Digite o nome do jogador que você deseja verificar:");
-				input = leitura.nextLine();
-				
-				for (int i = 0; i < tabuleiro.getJogadores().size(); i++) {
-					if (input.equals(tabuleiro.getJogadores().get(i).getNome())) {
-						System.out.println(tabuleiro.getJogadores().get(i));
-						break;
-					}
-				}
-			}
-			
-			else if (input.equals("2")) {
-				for (int i = 0; i < tabuleiro.getPropriedades().size(); i++) {
-					System.out.println(tabuleiro.getPropriedades().get(i));
-				}
-			}
-			
-			else if(input.equals("3")) {
-				executando = false;
-			}
-
-		}*/
+		tabuleiro.lerLog();
 			
 		leitura.close();
 		

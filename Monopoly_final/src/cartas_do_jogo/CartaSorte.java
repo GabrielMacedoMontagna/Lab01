@@ -1,7 +1,5 @@
 package cartas_do_jogo;
 
-import main.Jogador;
-
 public class CartaSorte extends Carta {
 	private int movimento;
 	private int efeito; //Aqui, vamos colocar quanto o jogador vai ganhar/perder de dinheiro.
@@ -10,23 +8,10 @@ public class CartaSorte extends Carta {
 	private String acao;
 	private String restricao;
 	
-	//construtor sem dono.
+	//construtor.
 	public CartaSorte(int movimento, int efeito, int tempo, float valor, String descricao, String acao, String restricao, TipoCarta tipo) {
 		
 		super(descricao, tipo);
-
-		this.movimento = movimento;
-		this.efeito = efeito;
-		this.tempo = tempo;
-		this.valor = valor;
-		this.acao = acao;
-		this.restricao = restricao;
-	}
-	
-	//construtor com dono.
-	public CartaSorte(int movimento, int efeito, int tempo, float valor, String descricao, String acao, String restricao, Jogador dono, TipoCarta tipo) {
-		
-		super(descricao, dono, tipo);
 
 		this.movimento = movimento;
 		this.efeito = efeito;

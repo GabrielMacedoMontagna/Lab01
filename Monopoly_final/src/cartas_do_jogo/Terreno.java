@@ -1,7 +1,5 @@
 package cartas_do_jogo;
 
-//import main.Jogador;
-
 public class Terreno extends Propriedade {
 	private int numeroCasas;
 	private int maxCasas = 4;
@@ -9,7 +7,7 @@ public class Terreno extends Propriedade {
 	private int valorHotel;
 	private boolean hotel;
 	
-	//construtor sem dono.
+	//construtor.
 	public Terreno(int preco, int aluguel, int posicao, String nome, String descricao, TipoCarta tipo, int numeroCasas, int valorCasa, int valorHotel, boolean hotel) {
 		super(preco, aluguel, posicao, nome, descricao, tipo);
 		
@@ -19,16 +17,6 @@ public class Terreno extends Propriedade {
 		this.valorHotel = valorHotel;
 		this.hotel = hotel;
 	}
-		
-	//construtor com dono.
-	/*public Terreno(int preco, int aluguel, int posicao, String nome, String descricao, TipoCarta tipo, Jogador dono, int numeroCasas, int valorCasa, int valorHotel, boolean hotel) {
-		super(preco, aluguel, posicao, nome, descricao, tipo, dono);
-		
-		this.numeroCasas = numeroCasas;
-		this.valorCasa = valorCasa;
-		this.valorHotel = valorHotel;
-		this.hotel = hotel;
-	}*/
 	
 	//getters.
 	public int getNumeroCasas() {

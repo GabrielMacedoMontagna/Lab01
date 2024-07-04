@@ -1,7 +1,5 @@
 package cartas_do_jogo;
 
-import main.Jogador;
-
 public class Estacao extends Propriedade {
 	private int tarifa;
 	
@@ -10,12 +8,6 @@ public class Estacao extends Propriedade {
 		
 		super(preco, aluguel, posicao, nome, descricao, tipo);
 		this.tarifa = tarifa;
-	}
-	
-	//construtor com dono.
-	public Estacao(int preco, int aluguel, int posicao, String nome, String descricao, TipoCarta tipo, int tarifa, Jogador dono) {
-		
-		super(preco, aluguel, posicao, nome, descricao, tipo, dono);
 	}
 
 	@Override
