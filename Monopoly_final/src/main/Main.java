@@ -49,11 +49,11 @@ public class Main {
 		tabuleiro.addCartaSorte(CS1);
 		CartaSorte CS2 = new CartaSorte(0, -50, 0, 0, "Obras", "Sua casa está em obra! Pague 50 reais ao banco.", "A carta deve ser usada imediatamente.", TipoCarta.SORTE);
 		tabuleiro.addCartaSorte(CS2);
-		CartaSorte CS3 = new CartaSorte(0, 100, 0, 100, "Sorte", "Seu vizinho caloteiro finalmente te pagou! Receba 100 reais do banco.", "A carta deve ser usada imediatamente.", TipoCarta.SORTE);
+		CartaSorte CS3 = new CartaSorte(0, 100, 0, 0, "Sorte", "Seu vizinho caloteiro finalmente te pagou! Receba 100 reais do banco.", "A carta deve ser usada imediatamente.", TipoCarta.SORTE);
 		tabuleiro.addCartaSorte(CS3);
-		CartaSorte CS4 = new CartaSorte(0, -200, 0, -200, "Azar", "Você estava acima do limite de velocidade e foi multado! Pague 200 reais ao banco.", "A carta deve ser usada imediatamente.", TipoCarta.REVES);
+		CartaSorte CS4 = new CartaSorte(0, -200, 0, 0, "Azar", "Você estava acima do limite de velocidade e foi multado! Pague 200 reais ao banco.", "A carta deve ser usada imediatamente.", TipoCarta.REVES);
 		tabuleiro.addCartaSorte(CS4);
-		CartaSorte CS5 = new CartaSorte(0, 1, 0, 0, "Loteria", "Ganhou na loteria! Receba 200 reais do banco.", "A carta deve ser usada imediatamente.", TipoCarta.SORTE);
+		CartaSorte CS5 = new CartaSorte(0, 200, 0, 0, "Loteria", "Ganhou na loteria! Receba 200 reais do banco.", "A carta deve ser usada imediatamente.", TipoCarta.SORTE);
 		tabuleiro.addCartaSorte(CS5);
 		
 		//no tabuleiro, as posicoes vazias do vetor sao as casas de sorte/reves do jogo.
@@ -158,12 +158,12 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		System.out.println("O novo saldo de " + jogadorAtual.getNome() + " é: " + jogadorAtual.getDinheiro() + " reais.");
-		System.out.println("O novo saldo de " + propAtual.getDono().getNome() + " é: " + propAtual.getDono().getDinheiro() + " reais.");
-		
 		//cobra o aluguel do jogador atual.
 		jogadorAtual.movimentaConta(-propAtual.calcularAluguel());
 		propAtual.getDono().movimentaConta(propAtual.calcularAluguel());
+		
+		System.out.println("O novo saldo de " + jogadorAtual.getNome() + " é: " + jogadorAtual.getDinheiro() + " reais.");
+		System.out.println("O novo saldo de " + propAtual.getDono().getNome() + " é: " + propAtual.getDono().getDinheiro() + " reais.");
 		
 		//verifica se ele ficou com a conta zerada.
 		jogadorAtual = verificaSaldo(jogadorAtual);
@@ -192,6 +192,8 @@ public class Main {
 			
 			
 			System.out.println("Vez de " + nomeJogAtual);
+			System.out.println(jogadorAtual);
+			System.out.println("\n");
 			System.out.println("Pressione enter para jogar os dados! =)");
 			leitura.nextLine();
 			System.out.println("Jogando os dados...");
@@ -240,10 +242,11 @@ public class Main {
 					e.printStackTrace();
 				}
 				
-				//gera o indice aleatoriamente e remove-a do monte.
-				indiceCarta = random.nextInt(tabuleiro.getCartas().size());
 				
+				//vamos usar um try/catch para verificar se o array de cartas sorte/reves nao esta vazio.
 				try {
+					//gera o indice aleatoriamente e remove-a do monte.
+					indiceCarta = random.nextInt(tabuleiro.getCartas().size()); //o primeiro erro surge aqui, vamos dar catch nele.
 					CartaSorte cartaNova = tabuleiro.getCartas().get(indiceCarta);
 					tabuleiro.getCartas().remove(indiceCarta);
 					
@@ -258,8 +261,8 @@ public class Main {
 					//verifica se ele ficou com a conta zerada.
 					jogadorAtual = verificaSaldo(jogadorAtual);
 					
-				} catch (ArrayIndexOutOfBoundsException e) {
-					System.out.println("As cartas de sorte/revés acabaram! Vamos pular a vez de  " + nomeJogAtual + "=(");
+				} catch (IllegalArgumentException e) {
+					System.out.println("As cartas de sorte/revés acabaram! Vamos pular a vez de " + nomeJogAtual + " =(");
 				}
 			}
 			
@@ -471,13 +474,13 @@ public class Main {
 		//vamos instanciar o tabuleiro.
 		Tabuleiro tabuleiro = new Tabuleiro(numJogadores);
 		
-		Jogador J1 = new Jogador("Gabriel", "123.456.789-00", "gabriel@email.com", "fotoGabriel", "azul");
+		Jogador J1 = new Jogador("Gabriel", "123.456.789-00", "gabriel@email.com", "fotoGabriel", "verde");
 		tabuleiro.addJogador(J1);
 		
-		Jogador J2 = new Jogador("Esther", "123.456.789-00", "esther@email.com", "fotoEsther", "verde");
+		Jogador J2 = new Jogador("Maria Chata", "123.456.789-00", "esther@email.com", "fotoEsther", "vinho");
 		tabuleiro.addJogador(J2);
 		
-		Jogador J3 = new Jogador("Fulano", "123.456.789-00", "fulano@email.com", "fotoFulano", "vermelho");
+		Jogador J3 = new Jogador("Mamãe", "123.456.789-00", "fulano@email.com", "fotoFulano", "rosa");
 		tabuleiro.addJogador(J3);
 		
 		System.out.println("Vamos começar o jogo!");

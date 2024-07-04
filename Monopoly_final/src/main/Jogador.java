@@ -143,6 +143,8 @@ public class Jogador {
 		if (posicao >= tamanhoTabuleiro) {
 			posicao -= tamanhoTabuleiro;
 		}
+		
+		peca.setPosicao(posicao);
 	}
 	
 	public void eliminar() {

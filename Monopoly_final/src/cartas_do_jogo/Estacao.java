@@ -28,7 +28,7 @@ public class Estacao extends Propriedade {
 		 String out = "";
 		 
 		 out += "ESTAÇÃO\n";
-		 out += "Nome:" + super.getNome() + "\n";
+		 out += "Nome: " + super.getNome() + "\n";
 		 out += "Descrição: " + super.getDescricao() + "\n";
 		
 		 if (super.getDono() == null){

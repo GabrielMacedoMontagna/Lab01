@@ -26,7 +26,7 @@ public class ServicoPublico extends Propriedade {
 		String out = "";
 		
 		 out += "SERVIÇO PÚBLICO\n";
-		 out += "Nome:" + super.getNome() + "\n";
+		 out += "Nome: " + super.getNome() + "\n";
 		 out += "Descrição: " + super.getDescricao() + "\n";
 		
 		 if (super.getDono() == null) {

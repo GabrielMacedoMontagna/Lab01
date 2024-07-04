@@ -105,7 +105,7 @@ public class Terreno extends Propriedade {
 		String out = "";
 		
 		out += "TERRENO\n";
-		out += "Nome:" + super.getNome() + "\n";
+		out += "Nome: " + super.getNome() + "\n";
 		out += "Descrição: " + super.getDescricao() + "\n";
 		
 		if (super.getDono() == null) {
